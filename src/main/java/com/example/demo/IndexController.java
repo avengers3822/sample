@@ -18,7 +18,15 @@ public class IndexController {
 	@RequestMapping("/")
 	public String index(Model model) {
 		List<Map<String,Object>> list;
-		list = jdbcTemplate.queryForList("select * from member");
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("select member.id,member.name,map.lat,map.lng ");
+		sb.append("from member ");
+		sb.append("left outer join map ");
+		sb.append("on member.id = map.id ");
+		sb.append("order by member.id ");
+
+		list = jdbcTemplate.queryForList(sb.toString());
 		model.addAttribute("members", list);
 		return "index";
 	}

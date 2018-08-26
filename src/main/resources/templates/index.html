@@ -3,8 +3,55 @@
 <head>
     <meta charset="utf-8" />
     <title>アベンジャーズメンバー</title>
+<style>
+     #maps{
+       height: 400px;
+       width: 600px;
+     }
+</style>
 </head>
 <body>
-<p th:each="member : ${members}" th:text="${member.get('name')}" />
+
+
+<a href="#.#" th:each="member : ${members}" th:text="${member.get('name')}+'　'"  th:attr="onclick='moveMap(' + ${member.get('lat')} + ',' + ${member.get('lng')} + ');'" >
+</a>
+
+<div id="maps"></div>
+<script src="//maps.googleapis.com/maps/api/js?key=AIzaSyD7E7LIcRo4wGw4wObbsbm2cV9zdSmuSxk&callback=initMap" async></script>
+
+
+<script>
+	function initMap() {
+	  var mapPosition = {lat: 34.684685, lng: 135.506825}
+	  var mapArea = document.getElementById('maps');
+	  var mapOptions = {
+	    center: mapPosition,
+	    zoom: 16,
+	  };
+	  var map = new google.maps.Map(mapArea, mapOptions);
+
+	  var marker
+	  marker = new google.maps.Marker({ // マーカーの追加
+	        position: mapPosition, // マーカーを立てる位置を指定
+	      map: map // マーカーを立てる地図を指定
+	   });
+	}
+
+	function moveMap(alat,alng) {
+		  var mapPosition = {lat: alat, lng: alng}
+		  var mapArea = document.getElementById('maps');
+		  var mapOptions = {
+		    center: mapPosition,
+		    zoom: 16,
+		  };
+		  var map = new google.maps.Map(mapArea, mapOptions);
+
+		  var marker
+		  marker = new google.maps.Marker({ // マーカーの追加
+		        position: mapPosition, // マーカーを立てる位置を指定
+		      map: map // マーカーを立てる地図を指定
+		   });
+		}
+</script>
 </body>
 </html>
